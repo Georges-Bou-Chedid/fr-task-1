@@ -143,9 +143,12 @@ class ProductsController extends Controller
             }
         
 
+
     
 
     protected function validateProducts(request $request){
+
+        //commit validating request
 
         return $request->validate([                       //
             'name' => 'required',                  //                 //
