@@ -1,20 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+  <div class="container">
     <div class="h4 card-header justify-content-between">
       <strong>Maintenance</strong>
-      <a href="/home/CreateProduct">Add Products</a>
+            
+      @if(session('cartempty'))
+      <div class="toast-header">
+      {{ session('cartempty') }}
+      </div>
+      @endif
+
+      <a href="/home/cart" class="btn btn-primary is-size-5">Go To Cart</a>
     </div>
 
     @foreach($products as $product)
       <div class="card-body" style="text-align:center;">
-
-      <p class="is-size-5 is-italic has-text-weight-semibold">Created By {{ $product->user->name}}</p>
-      <p>{{ $product->created_at }}</p>
-      
             <div class="row">
-
             
             <div class="col-md-8 img">
             <img src = "{{ $product->img }}">
@@ -28,17 +30,26 @@
 
             <div class="b">
               {{ $product->Description }}
+            </div>
+
+            <a href="/home/add-to-cart/{{ $product->id }}" class="btn btn-warning btn-block text-center" role="button">Add to cart</a>
             
+            <div>
             <p><label for="price" class="text-lg-left font-weight-bold">{{ $product->Price }}$</label></p>
             <label for="Quantity" class="font-italic">Quantity:</label>
-              {{ $product->Quantity }} 
-            </div>
-
-            </div>
-            </div>
-            </div>
-       <div class="hr"></div>
-      @endforeach
-
+              {{ $product->Quantity }}
 </div>
+            @if(session('success'))
+            <div>
+                {{ session('success') }}
+            </div>
+            @endif
+           
+            </div>
+            </div>
+            <div class="hr"></div>
+      @endforeach
+            
+</div>
+ 
 @endsection

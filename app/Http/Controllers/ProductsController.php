@@ -4,24 +4,34 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Auth;
 use App\Models\Cart;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\storeproductrequest;
 
 class ProductsController extends Controller
 {
-    public $total_Price = 0;
-
-    public function ProductsController(int $total_Price)
-    {
-        $this->total_Price = $total_Price;
-    
-    }
-
+    /*
+    * @return void
+    */
     public function index(){
         $products = Product::latest()->get();
-        return view ('Roles/welcome' , ['products'=>$products]);
+
+        if(auth()->user()){
+        if(auth()->user()->role == 'Member'){
+            return view('Roles/Member', ['products'=>$products]);
+             }
+            else if(auth()->user()->role == 'Admin'){
+                return view('Roles/Admin', ['products'=>$products]);
+            }
+            else if(auth()->user()->role == 'Owner'){
+                return view('Roles/Owner' , ['products'=>auth()->user()->timeline()]);
+            }
+        }
+            else {
+            return view ('Roles/welcome', ['products'=>$products]);
+            }
     }
 
     public function show($id){
@@ -34,8 +44,8 @@ class ProductsController extends Controller
         return view('Upgrade/CreateProduct');
     }
 
-    public function store(Request $request){
-        $this->validateProducts($request);
+    public function store(storeproductrequest $request){
+       $validated = $request->validated();
 
         $products = new Product();
 
@@ -77,86 +87,10 @@ class ProductsController extends Controller
     }
 
     public function fetch(){
-        if (Auth()->user()->role == 'Owner'){
-            return view ('Roles/Owner', ['products' => auth()->user()->timeline()
-            ]);
-        }
-        else if (Auth()->user()->role == 'Admin'){
+        if (Auth()->user()->role == 'Admin'){
             return view ('Roles/Admin', ['products' => auth()->user()->timeline()
             ]);
         }
-    }
-
-    public function cart(){
-        
-        if(Cart::Where('user_id', auth()->id())){
-        $carts = Cart::latest()->get();
-        $products = Product::all();
-        }
-        return view('cart' , ['products' => $products],['carts' => $carts]);
-    }
-
-    public function addToCart($id){
-        $product = Product::find($id);
-        if(!$product) {
-            abort(404);
-        }
-        
-        $cart = Cart::all();
-
-        if($cart->isEmpty()){
-            $cart = Cart::create([
-                'user_id' => auth()->id(),
-                'product_id' => $product->id,
-                'Qty'=> 1,
-                'Price' => $product->Price,
-            ]);
-            return redirect('/home')->with('success', 'Product added to cart successfully!');
-        }
-
-        
-        if(Cart::where('user_id', auth()->id()) && Cart::where('product_id', $product->id)){
-
-                if(DB::table('carts')->pluck('Qty')->first() >= $product->Quantity){
-                    return redirect('/home')->with('failure', 'Out Of Stock');
-                }
-               else{
-                DB::table('carts')->increment('Qty');
-                $Qty = (DB::table('carts')->pluck('Qty')->first());
-                $total_Price = $product->Price * $Qty;
-                
-                DB::table('carts')->update(['Price' => $total_Price]);
-
-                return redirect('/home')->with('success', 'Product added to cart successfully!');
-               }
-            }
-
-            else{
-                Cart::create([
-                    'user_id' => auth()->id(),
-                    'product_id' => $product->id,
-                    'Qty'=> 1,
-                    'Price' => $product->Price,
-                ]);
-                return redirect('/home')->with('success', 'Product added to cart successfully!');
-        }
-            }
-        
-
-
-    
-
-    protected function validateProducts(request $request){
-
-        //commit validating request
-
-        return $request->validate([                       //
-            'name' => 'required',                  //                 //
-            'Price' => 'required', 
-            'Description' => 'required',
-            'Quantity' => 'required'                   //
-        ]);
-        }     
-
-    
+    }    
 }
+

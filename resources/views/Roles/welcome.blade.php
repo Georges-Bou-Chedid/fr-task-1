@@ -4,9 +4,6 @@
   <div class="container">
     <div class="h4 card-header justify-content-between">
       <strong>Maintenance</strong>
-      @if(Auth()->user())
-      <a href="/home/cart" class="btn btn-primary is-size-5">Go To Cart</a>
-      @endif
     </div>
 
     @foreach($products as $product)
@@ -27,13 +24,8 @@
               {{ $product->Description }}
             </div>
 
-            @if(Auth()->user())
-            <a href="/home/add-to-cart/{{ $product->id }}" class="btn btn-warning btn-block text-center" role="button">Add to cart</a>
-
-            @else
             <a href="/home/add-to-cart/{{ $product->id }}" class="btn-secondary btn-block text-center" role="button">Add to cart</a>
-            @endif
-            
+
             <div>
             <p><label for="price" class="text-lg-left font-weight-bold">{{ $product->Price }}$</label></p>
             <label for="Quantity" class="font-italic">Quantity:</label>

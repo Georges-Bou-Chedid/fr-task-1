@@ -13,11 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Opening
-Route::get('/', [App\Http\Controllers\ProductsController::class ,'index']);
-
 //Create Owner
-Route::post('/', [App\Http\Controllers\auth\RegisterOwnerController::class, 'store']);
+Route::post('/home', [App\Http\Controllers\auth\RegisterOwnerController::class, 'store']);
 Route::get('/home/registerOwner', [App\Http\Controllers\auth\RegisterOwnerController::class, 'create']);
 
 //Create Products
@@ -33,8 +30,8 @@ Route::delete('/home/{Product}', [App\Http\Controllers\ProductsController::class
 Route::get('/home/Fetching', [App\Http\Controllers\ProductsController::class, 'fetch']);
 
 //cart
-Route::get('/home/cart', [App\Http\Controllers\ProductsController::class, 'cart']);
-Route::get('/home/add-to-cart/{Product}' , [App\Http\Controllers\ProductsController::class, 'addToCart']);
+Route::get('/home/cart', [App\Http\Controllers\CartController::class, 'cart']);
+Route::get('/home/add-to-cart/{Product}' , [App\Http\Controllers\CartController::class, 'addToCart']);
 
 //Mail for Purchase 
 Route::post('/home/cart/{email}/{User}' , [App\Http\Controllers\MailController::class, 'store']);
@@ -42,8 +39,12 @@ Route::post('/home/cart/{email}/{User}' , [App\Http\Controllers\MailController::
 
 Auth::routes();
 
-//Show all Products And Show one by ID (Authenticated)
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Show all Products And Show one by ID (Authenticated) And Logout
+Route::get('/home', [App\Http\Controllers\ProductsController::class ,'index']);
+Route::get('logout', [\App\Http\Controllers\Auth\LoginController::class , 'logout']);
 Route::get('/home/{Product}', [App\Http\Controllers\ProductsController::class, 'show']);
+
+
+
 
 

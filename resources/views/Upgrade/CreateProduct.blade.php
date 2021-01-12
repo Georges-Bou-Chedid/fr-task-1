@@ -15,7 +15,7 @@
                 type="text" 
                 name="name" 
                 id="name"
-                value="{{ old('name') }}">
+                >
 
             </div>
         </div>
@@ -27,7 +27,7 @@
                 <input class="input" 
                     name="img" 
                     id="img"
-                    >{{ old('img') }}</input>
+                    ></input>
                
                 
             </div>
@@ -41,7 +41,7 @@
                     type="number"
                     name="Price" 
                     id="Price"
-                    >{{ old('Price') }}</textarea>
+                    ></textarea>
                 
             </div>
         </div>
@@ -53,7 +53,7 @@
                 <textarea class="textarea" 
                     name="Description" 
                     id="Description"
-                    >{{ old('Description') }}</textarea>
+                    ></textarea>
                
             </div>
         </div>
@@ -66,7 +66,7 @@
                     type="number"
                     name="Quantity" 
                     id="Quantity"
-                    >{{ old('Quantity') }}</textarea>
+                    ></textarea>
                 
             </div>
         </div>
