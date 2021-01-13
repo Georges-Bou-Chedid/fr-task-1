@@ -35,13 +35,13 @@
             </div>
 
             @auth
-            @if ( Auth()->user()->role == 'Admin' || Auth()->user()->role == 'Owner')
+            @if ( Auth()->user()->role == '3' || Auth()->user()->role == '2')
             <div>
-              <form method="GET" action="/home/{{ $products->id }}/edit" >
+              <form method="GET" action="/{{ $products->id }}/edit" >
             <button class="button" type="submit" style="margin-bottom:6px;">Update</button>
             </form>
 
-            <form method="POST" action="/home/{{ $products->id }}" >
+            <form method="POST" action="/{{ $products->id }}" >
             @csrf
             @method('DELETE')
             <button class="button" type="submit" onclick="return confirm('Are you sure?')">Delete</button>
@@ -53,12 +53,12 @@
 </div>
              
 <div style="margin:auto; margin-top:20px">  
-            @if(Auth()->user() && Auth()->user()->role == 'Member')
+            @if(Auth()->user() && Auth()->user()->role == '1')
             @if(Auth()->user())
-            <a href="/home/add-to-cart/{{ $products->id }}" class="btn btn-warning btn-block text-center" role="button">Add to cart</a>
+            <a href="/add-to-cart/{{ $products->id }}" class="btn btn-warning btn-block text-center" role="button">Add to cart</a>
 
             @else
-            <a href="/home/add-to-cart/{{ $products->id }}" class="btn-secondary btn-block text-center" role="button">Add to cart</a>
+            <a href="/add-to-cart/{{ $products->id }}" class="btn-secondary btn-block text-center" role="button">Add to cart</a>
             @endif
             @endif
 

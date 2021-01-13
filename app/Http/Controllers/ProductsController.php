@@ -16,23 +16,23 @@ class ProductsController extends Controller
     * @return void
     */
     public function index(){
+        
+        if(auth()->user() && auth()->user()->role == User::OWNER){
+        return view('Roles/Owner' , ['products'=>auth()->user()->timeline()]);
+        }
+
         $products = Product::latest()->get();
 
-        if(auth()->user()){
-        if(auth()->user()->role == 'Member'){
+        if(!auth()->user()){
+            return view ('Roles/welcome', ['products'=>$products]);
+        }
+
+        if(auth()->user()->role == User::MEMBER){
             return view('Roles/Member', ['products'=>$products]);
              }
-            else if(auth()->user()->role == 'Admin'){
-                return view('Roles/Admin', ['products'=>$products]);
-            }
-            else if(auth()->user()->role == 'Owner'){
-                return view('Roles/Owner' , ['products'=>auth()->user()->timeline()]);
-            }
+        return view('Roles/Admin', ['products'=>$products]);
         }
-            else {
-            return view ('Roles/welcome', ['products'=>$products]);
-            }
-    }
+    
 
     public function show($id){
         $products = Product::find($id);
@@ -58,7 +58,7 @@ class ProductsController extends Controller
        
         $products->save();
 
-        return redirect('/home');
+        return redirect('/');
     }
 
     public function edit($id){
@@ -76,21 +76,18 @@ class ProductsController extends Controller
         $products->Quantity = request('Quantity');
         $products->save();
 
-        return redirect('/home/' . $products->id);
+        return redirect('/'. $products->id);
     }
 
     public function delete($id){
         $products = Product::find($id);
         $products->delete();
 
-        return redirect('/home');
+        return redirect('/');
     }
 
     public function fetch(){
-        if (Auth()->user()->role == 'Admin'){
-            return view ('Roles/Admin', ['products' => auth()->user()->timeline()
-            ]);
-        }
+            return view ('Roles/Admin', ['products' => auth()->user()->timeline()]);
     }    
 }
 

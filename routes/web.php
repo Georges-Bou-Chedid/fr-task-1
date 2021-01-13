@@ -13,38 +13,37 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Create Owner
-Route::post('/home', [App\Http\Controllers\auth\RegisterOwnerController::class, 'store']);
-Route::get('/home/registerOwner', [App\Http\Controllers\auth\RegisterOwnerController::class, 'create']);
+Route::get('/registerOwner', [App\Http\Controllers\auth\RegisterOwnerController::class, 'create']);
 
 //Create Products
-Route::post('/home', [App\Http\Controllers\ProductsController::class, 'store']);
-Route::get('/home/CreateProduct', [App\Http\Controllers\ProductsController::class, 'create']);
+Route::post('/', [App\Http\Controllers\ProductsController::class, 'store']);
+Route::get('/CreateProduct', [App\Http\Controllers\ProductsController::class, 'create']);
 
 //Update, Delete Products
-Route::get('/home/{Product}/edit', [App\Http\Controllers\ProductsController::class, 'edit']);
-Route::put('/home/{Product}', [App\Http\Controllers\ProductsController::class, 'update']);
-Route::delete('/home/{Product}', [App\Http\Controllers\ProductsController::class, 'delete']);
+Route::get('/{Product}/edit', [App\Http\Controllers\ProductsController::class, 'edit']);
+Route::put('/{Product}', [App\Http\Controllers\ProductsController::class, 'update']);
+Route::delete('/{Product}', [App\Http\Controllers\ProductsController::class, 'delete']);
 
 //Fetch
-Route::get('/home/Fetching', [App\Http\Controllers\ProductsController::class, 'fetch']);
+Route::get('/Fetching', [App\Http\Controllers\ProductsController::class, 'fetch']);
 
 //cart
-Route::get('/home/cart', [App\Http\Controllers\CartController::class, 'cart']);
-Route::get('/home/add-to-cart/{Product}' , [App\Http\Controllers\CartController::class, 'addToCart']);
+Route::get('/cart', [App\Http\Controllers\CartController::class, 'cart']);
+Route::get('/add-to-cart/{Product}' , [App\Http\Controllers\CartController::class, 'addToCart']);
 
 //Mail for Purchase 
-Route::post('/home/cart/{email}/{User}' , [App\Http\Controllers\MailController::class, 'store']);
+Route::post('/cart/{email}/{User}' , [App\Http\Controllers\MailController::class, 'store']);
 
 
 Auth::routes();
 
 //Show all Products And Show one by ID (Authenticated) And Logout
-Route::get('/home', [App\Http\Controllers\ProductsController::class ,'index']);
+Route::get('/', [App\Http\Controllers\ProductsController::class ,'index']);
 Route::get('logout', [\App\Http\Controllers\Auth\LoginController::class , 'logout']);
-Route::get('/home/{Product}', [App\Http\Controllers\ProductsController::class, 'show']);
+Route::get('/{Product}', [App\Http\Controllers\ProductsController::class, 'show']);
 
 
-
+//Create Owner
+Route::post('/register', [App\Http\Controllers\auth\RegisterOwnerController::class, 'store']);
 
 

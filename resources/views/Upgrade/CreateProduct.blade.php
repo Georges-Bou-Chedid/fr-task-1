@@ -5,7 +5,7 @@
 	<div id="page" class="container">
     <h1 class="heading has-text-weight-bold is-size-4">New Product</h1>
 
-    <form method="POST" action="/home">
+    <form method="POST" action="/">
     @csrf
         <div class="field">
             <label class="label" for="name">Name</label>

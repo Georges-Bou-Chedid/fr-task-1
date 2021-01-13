@@ -5,7 +5,7 @@
 	<div id="page" class="container">
     <h1 class="heading has-text-weight-bold is-size-4">Update Product</h1>
 
-    <form method="POST" action="/home/{{ $products->id }}">
+    <form method="POST" action="/{{ $products->id }}">
     @csrf
     @method('PUT')  
         <div class="field">

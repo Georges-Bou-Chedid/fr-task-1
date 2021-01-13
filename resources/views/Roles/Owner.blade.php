@@ -4,7 +4,7 @@
 <div class="container">
     <div class="h4 card-header justify-content-between">
       <strong>Maintenance</strong>
-      <a href="/home/CreateProduct">Add Products</a>
+      <a href="/CreateProduct">Add Products</a>
     </div>
 
     @foreach($products as $product)
@@ -23,7 +23,7 @@
             <div class="col-md-4">
             <div class="h5">
               <strong>
-              <a href="/home/{{ $product->id }}">{{ $product->name }}</a></strong>
+              <a href="/{{ $product->id }}">{{ $product->name }}</a></strong>
             </div>
 
             <div class="b">

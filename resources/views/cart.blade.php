@@ -44,9 +44,9 @@
     
         @endforeach
         <tr>
-            <td><a href="/home" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a>
+            <td><a href="/" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a>
 
-            <form method="POST" action="/home/cart/{{ Auth()->user()->email }}/{{ Auth()->user()->id }}">
+            <form method="POST" action="/cart/{{ Auth()->user()->email }}/{{ Auth()->user()->id }}">
             @csrf
             <button type="submit" class="btn btn-danger"><i></i> Purchase</button></td>
             </form>

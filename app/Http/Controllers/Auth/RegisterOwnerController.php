@@ -52,11 +52,11 @@ class RegisterOwnerController extends Controller
         $users->name = request('name');
         $users->email = request('email');
         $users->password = Hash::make(request ('password'));
-        $users->role = ('Owner');
+        $users->role = User::OWNER;
 
         $users->save();
 
-        return redirect('/home');
+        return redirect('/');
     }
 
     protected function validateUser(request $request)

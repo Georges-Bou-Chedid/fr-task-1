@@ -11,13 +11,14 @@ use Illuminate\Support\Facades\DB;
 class CartController extends Controller
 {
     public function cart(){
-        if(Cart::Where('user_id',auth()->id())->first()){
-        $carts = Cart::Where('user_id',auth()->id())->sharedLock()->get();
-        return view('cart' ,['carts' => $carts]);
+        $products = Cart::where('user_id', auth()->id())->get();
+
+        if($products->isEmpty()){
+            return redirect('/')->with('cartempty', 'Please Fill Up Your Cart!!!');
         }
-        else{
-            return redirect('/home')->with('cartempty', 'Please Fill Up Your Cart!!!');
-        }
+
+        return view('cart' ,['carts' => $products]);
+
     }
 
     public function addToCart($id){
@@ -26,7 +27,7 @@ class CartController extends Controller
             abort(404);
         }
         
-        $cart = Cart::all();
+        $cart = Cart::where('user_id', auth()->id())->get();
 
         if($cart->isEmpty()){
             $cart = Cart::create([
@@ -35,23 +36,25 @@ class CartController extends Controller
                 'Qty'=> 1,
                 'Price' => $product->Price,
             ]);
-            return redirect('/home')->with('success', 'Product added to cart successfully!');
+            return redirect('/')->with('success', 'Product added to cart successfully!');
         }
 
         
-        if(Cart::where('user_id', auth()->id())->first() && Cart::where('product_id', $product->id)->first()){
+        if($userproduct = $cart->where('product_id' , $id)->first()){
 
-                if(DB::table('carts')->pluck('Qty')->first() >= $product->Quantity){
-                    return redirect('/home')->with('failure', 'Out Of Stock');
+                
+                if($userproduct->Qty >= $product->Quantity){
+                    return redirect('/')->with('failure', 'Out Of Stock');
                 }
                else{
-                DB::table('carts')->increment('Qty');
-                $Qty = (DB::table('carts')->pluck('Qty')->first());
-                $total_Price = $product->Price * $Qty;
-                
-                DB::table('carts')->update(['Price' => $total_Price]);
+                $newquantity = $userproduct->Qty + 1;
 
-                return redirect('/home')->with('success', 'Product added to cart successfully!');
+                $userproduct->update([
+                    'Qty' => $newquantity,
+                    'Price' => $product->Price * $newquantity
+                ]);
+
+                return redirect('/')->with('success', 'Product added to cart successfully!');
                }
             }
 
@@ -62,7 +65,7 @@ class CartController extends Controller
                     'Qty'=> 1,
                     'Price' => $product->Price,
                 ]);
-                return redirect('/home')->with('success', 'Product added to cart successfully!');
+                return redirect('/')->with('success', 'Product added to cart successfully!');
         }
             }
 }

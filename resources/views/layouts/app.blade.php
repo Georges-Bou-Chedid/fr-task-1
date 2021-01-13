@@ -25,7 +25,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
             
-                <a class="navbar-brand" href="/home">
+                <a class="navbar-brand" href="/">
                     {{ config('app.name', 'ShopStore') }}
                 </a>
 
@@ -39,7 +39,7 @@
 
                        
                         @if (Auth()->user())
-                        WELCOME {{ Auth()->user()->role}}!! 
+                        WELCOME {{ Auth()->user()->name}}!! 
 
                         @else
                         WELCOME To The Best Shop In Town 
