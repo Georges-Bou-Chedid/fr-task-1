@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 class CartController extends Controller
 {
     public function cart(){
+  
         $products = Cart::where('user_id', auth()->id())->get();
 
         if($products->isEmpty()){

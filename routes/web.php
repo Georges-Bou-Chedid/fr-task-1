@@ -31,9 +31,6 @@ Route::get('/Fetching', [App\Http\Controllers\ProductsController::class, 'fetch'
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'cart']);
 Route::get('/add-to-cart/{Product}' , [App\Http\Controllers\CartController::class, 'addToCart']);
 
-//Mail for Purchase 
-Route::post('/cart/{email}/{User}' , [App\Http\Controllers\MailController::class, 'store']);
-
 
 Auth::routes();
 
@@ -44,6 +41,10 @@ Route::get('/{Product}', [App\Http\Controllers\ProductsController::class, 'show'
 
 
 //Create Owner
-Route::post('/register', [App\Http\Controllers\auth\RegisterOwnerController::class, 'store']);
+Route::post('/registow', [App\Http\Controllers\auth\RegisterOwnerController::class, 'store']);
+
+//Notifications for Purchase 
+Route::post('/cart' , [App\Http\Controllers\MailController::class, 'store']);
+Route::get('/cart/notifications', [App\Http\Controllers\MailController::class, 'show']);
 
 

@@ -11,12 +11,16 @@
             <label class="label" for="name">Name</label>
 
             <div class="control">
-                <input class="input" 
+                <input class="form-control @error('name') is-invalid @enderror" 
                 type="text" 
                 name="name" 
                 id="name"
-                >
-
+                ></input>
+            @error('name')
+            <span class="invalid-feedback" role="alert">
+             <strong>{{ $message }}</strong>
+            </span>
+             @enderror
             </div>
         </div>
 
@@ -24,12 +28,12 @@
             <label class="label" for="img">Image</label>
 
             <div class="control">
-                <input class="input" 
+                <input class = "input"
+                    type="text"
                     name="img" 
                     id="img"
                     ></input>
                
-                
             </div>
         </div>
 
@@ -37,11 +41,16 @@
             <label class="label" for="Price">Price</label>
 
             <div class="control">
-                <input class="input" 
+                <input class="form-control @error('Price') is-invalid @enderror"  
                     type="number"
                     name="Price" 
                     id="Price"
                     ></textarea>
+                @error('Price')
+                <span class="invalid-feedback" role="alert">
+                 <strong>{{ $message }}</strong>
+                </span>
+                @enderror
                 
             </div>
         </div>
@@ -50,10 +59,15 @@
             <label class="label" for="Description">Description</label>
 
             <div class="control">
-                <textarea class="textarea" 
+                <textarea class="textarea form-control @error('Description') is-invalid @enderror"
                     name="Description" 
                     id="Description"
                     ></textarea>
+                @error('Description')
+                <span class="invalid-feedback" role="alert">
+                 <strong>{{ $message }}</strong>
+                </span>
+                @enderror
                
             </div>
         </div>
@@ -62,11 +76,16 @@
             <label class="label" for="Quantity">Quantity</label>
 
             <div class="control">
-                <input class="input" 
+                <input class="form-control @error('Quantity') is-invalid @enderror" 
                     type="number"
                     name="Quantity" 
                     id="Quantity"
                     ></textarea>
+                @error('Quantity')
+                <span class="invalid-feedback" role="alert">
+                 <strong>{{ $message }}</strong>
+                </span>
+                @enderror
                 
             </div>
         </div>

@@ -8,7 +8,7 @@
                 <div class="card-header">Create Your Owner </div>
 
                 <div class="card-body">
-                    <form method="POST" action="/register">
+                    <form method="POST" action="/registow">
                         @csrf
 
                         <div class="form-group row">
